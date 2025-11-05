@@ -18,6 +18,11 @@ const ITEM_DISPLAY = preload("res://scenes/item_display.tscn")
 }
 
 var money: int = 0
+
+# 0 -> 1 ranges
+var resource_pressure: float = 1.0
+var resource_charge: float = 1.0
+
 var conveyor_items: Array[ItemDisplay] = []
 
 
@@ -51,6 +56,18 @@ func _process(delta: float) -> void:
 			sell_conveyor_item(conveyor_item)
 	
 	money_label.text = "Money: %d" % money
+	$Control/Control/Pressure.value = resource_pressure
+	$Control/Control/Charge.value = resource_charge
+	
+	# Resources lowering
+	if is_broken("Valve"):
+		resource_pressure -= delta * 0.1 # 10 seconds (delta = 1 second)
+	else:
+		resource_pressure = 1.0
+
+
+func is_broken(minigame: String) -> bool:
+	return fix_minigame_buttons.get(minigame, null).visible
 
 
 func _on_fuse_m_inigame_pressed() -> void:
@@ -66,12 +83,23 @@ func _on_valve_fix_minigame_pressed() -> void:
 
 
 func _request_product_click() -> void:
-	var item_display := ITEM_DISPLAY.instantiate() as ItemDisplay
-	conveyor_items_container.add_child(item_display)
-	conveyor_items.push_back(item_display)
+	var enough_resources: bool = (
+		resource_pressure > 0.1
+		and resource_charge > 0.025
+	)
 	
-	item_display.global_position = conveyor_spawn_marker.global_position
-	item_display.set_item(load("res://resources/items/package.tres") as Item)
+	if enough_resources:
+		# Subtract resources
+		resource_pressure -= 0.1
+		resource_charge -= 0.025
+		
+		# Spawn
+		var item_display := ITEM_DISPLAY.instantiate() as ItemDisplay
+		conveyor_items_container.add_child(item_display)
+		conveyor_items.push_back(item_display)
+		
+		item_display.global_position = conveyor_spawn_marker.global_position
+		item_display.set_item(load("res://resources/items/package.tres") as Item)
 
 
 func sell_conveyor_item(item_display: ItemDisplay) -> void:
