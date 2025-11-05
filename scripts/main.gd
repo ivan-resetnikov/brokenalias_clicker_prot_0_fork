@@ -9,14 +9,27 @@ const ITEM_DISPLAY = preload("res://scenes/item_display.tscn")
 @onready var conveyor_spawn_marker: Marker2D = $Control/ConveyorItemsContainer/SpawnMarker
 @onready var conveyor_sold_marker: Marker2D = $Control/ConveyorItemsContainer/SoldHorizonlalMarker
 
+@onready var break_timers: Array[Timer] = [
+	$Control/ValveFixMinigame/BreakTimer,
+]
+
+@onready var fix_minigame_buttons: Dictionary[String, Button] = {
+	"Valve": $Control/ValveFixMinigame,
+}
 
 var money: int = 0
 var conveyor_items: Array[ItemDisplay] = []
 
 
 func _ready() -> void:
-	#show_overlay("Fuse")
-	pass
+	show_overlay("")
+	
+	for fix_minigame_button: Button in fix_minigame_buttons.values():
+		fix_minigame_button.hide()
+	
+	for break_timer: Timer in break_timers:
+		break_timer.wait_time = randf_range(5.0, 10.0)
+		break_timer.start()
 	
 	# give random break times
 
@@ -65,3 +78,7 @@ func sell_conveyor_item(item_display: ItemDisplay) -> void:
 	conveyor_items.erase(item_display)
 	item_display.queue_free()
 	money += 10
+
+
+func _on_valve_break_timer_timeout() -> void:
+	fix_minigame_buttons.get("Valve").show()
