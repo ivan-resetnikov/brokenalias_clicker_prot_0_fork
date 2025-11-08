@@ -15,6 +15,7 @@ const ITEM_DISPLAY = preload("res://scenes/item_display.tscn")
 
 @onready var fix_minigame_buttons: Dictionary[String, Button] = {
 	"Valve": $Control/ValveFixMinigame,
+	"Electicity": $Control/WireFixBUtton
 }
 
 var money: int = 0
@@ -81,6 +82,8 @@ func _on_pipes_fix_b_utton_pressed() -> void:
 func _on_valve_fix_minigame_pressed() -> void:
 	show_overlay("Valve")
 
+func _on_wire_fix_b_utton_pressed() -> void:
+	show_overlay("Electicity")
 
 func _request_product_click() -> void:
 	var enough_resources: bool = (
@@ -110,3 +113,4 @@ func sell_conveyor_item(item_display: ItemDisplay) -> void:
 
 func _on_valve_break_timer_timeout() -> void:
 	fix_minigame_buttons.get("Valve").show()
+	fix_minigame_buttons.get("Electicity").show()

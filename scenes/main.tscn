@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bpxb6kag1fyti"]
+[gd_scene load_steps=7 format=3 uid="uid://bpxb6kag1fyti"]
 
 [ext_resource type="Script" uid="uid://doy4m1udqhewr" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://ckia8crwcqkgb" path="res://assets/bg.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://bn27wp8oa7n17" path="res://scripts/valve_minigame.gd" id="3_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://dcki3wjgc0t0l" path="res://assets/valve.png" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://c8gsgqvd17i6y" path="res://scenes/electicity.gd" id="5_tbgi4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5qli"]
 bg_color = Color(0, 0, 0, 1)
@@ -113,6 +114,22 @@ offset_left = -606.0
 offset_top = -307.0
 offset_right = -510.0
 offset_bottom = -197.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Click!"
+
+[node name="WireFixBUtton" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -937.0
+offset_top = 194.0
+offset_right = -841.0
+offset_bottom = 304.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 32
@@ -318,6 +335,59 @@ offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_o5qli")
+script = ExtResource("5_tbgi4")
+
+[node name="LeftWires" type="VBoxContainer" parent="Control/MinigameOverlays/Electicity"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 495.0
+offset_top = -82.0
+offset_right = 575.0
+offset_bottom = 82.0
+grow_vertical = 2
+theme_override_constants/separation = 129
+
+[node name="BlueWire1" type="ColorRect" parent="Control/MinigameOverlays/Electicity/LeftWires" groups=["connection_points"]]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
+
+[node name="Line2D" type="Line2D" parent="Control/MinigameOverlays/Electicity/LeftWires/BlueWire1"]
+position = Vector2(-495, -260.5)
+default_color = Color(0, 0, 1, 1)
+
+[node name="RedWire1" type="ColorRect" parent="Control/MinigameOverlays/Electicity/LeftWires" groups=["connection_points"]]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Line2D" type="Line2D" parent="Control/MinigameOverlays/Electicity/LeftWires/RedWire1"]
+position = Vector2(-495, -260.5)
+default_color = Color(1, 0, 0, 1)
+
+[node name="RightWires" type="VBoxContainer" parent="Control/MinigameOverlays/Electicity"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 842.0
+offset_top = -144.0
+offset_right = 922.0
+offset_bottom = 145.0
+grow_vertical = 2
+theme_override_constants/separation = 129
+
+[node name="RedWire2" type="ColorRect" parent="Control/MinigameOverlays/Electicity/RightWires" groups=["connection_points"]]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="BlueWire2" type="ColorRect" parent="Control/MinigameOverlays/Electicity/RightWires" groups=["connection_points"]]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
 
 [node name="Label" type="Label" parent="Control/MinigameOverlays/Electicity"]
 layout_mode = 1
@@ -326,14 +396,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -37.5
+offset_top = -24.5
+offset_right = 37.5
+offset_bottom = 24.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Lecy todo
 "
+
+[node name="Line2D" type="Line2D" parent="Control/MinigameOverlays/Electicity"]
+position = Vector2(-495, -260.5)
 
 [node name="MoneyLabel" type="Label" parent="Control"]
 layout_mode = 0
@@ -344,6 +417,7 @@ text = "Money: 0"
 
 [connection signal="pressed" from="Control/Button" to="." method="_request_product_click"]
 [connection signal="pressed" from="Control/PipesFixBUtton" to="." method="_on_pipes_fix_b_utton_pressed"]
+[connection signal="pressed" from="Control/WireFixBUtton" to="." method="_on_wire_fix_b_utton_pressed"]
 [connection signal="pressed" from="Control/FuseMInigame" to="." method="_on_fuse_m_inigame_pressed"]
 [connection signal="pressed" from="Control/ValveFixMinigame" to="." method="_on_valve_fix_minigame_pressed"]
 [connection signal="timeout" from="Control/ValveFixMinigame/BreakTimer" to="." method="_on_valve_break_timer_timeout"]
