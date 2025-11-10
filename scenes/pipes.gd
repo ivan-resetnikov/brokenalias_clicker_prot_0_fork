@@ -4,7 +4,7 @@ extends Control
 @onready var bar = $PipePressure
 
 @export var leak_scene: PackedScene
-@export var spawn_interval = 2.0
+@export var spawn_interval = 1
 
 var spawn_timer = 0.0
 

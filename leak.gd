@@ -1,9 +1,9 @@
 extends Node2D
 
-@export var max_size: float = 20.0
+@export var max_size: float = 150.0
 @export var min_size: float = 10.0
-@export var shrink_amount: float = 3.0
-@export var regrow_speed: float = 1.0
+@export var shrink_amount: float = 25.0
+@export var regrow_speed: float = 25.0
 
 var current_size: float
 var hits: int = 0
