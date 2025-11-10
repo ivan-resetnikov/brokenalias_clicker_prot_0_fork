@@ -1,5 +1,7 @@
 extends Control
 
+@onready var main: Node = $"../../.."
+@onready var pipes: Panel = $".."
 @onready var pipe_area: ColorRect = $PipeArea
 @onready var bar = $PipePressure
 
@@ -38,5 +40,4 @@ func spawn_leak():
 func _on_leak_fixed():
 	bar.value += 10
 	if bar.value >= 100:
-		print("Pipe Fixed")
-		hide()
+		pipes.hide()
